@@ -125,6 +125,10 @@ sleep 15
 gcloud compute addresses list --filter="region:($REGION)"
 ```
 
+```cmd
+gcloud compute addresses create $UNUSED_IP --project=$PROJECT_ID --region=us-central1
+```
+
 ---
 
 # Congratulations ..!!🎉  You completed the lab shortly..😃💯
