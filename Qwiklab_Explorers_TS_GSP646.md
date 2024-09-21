@@ -19,6 +19,17 @@ gcloud services disable cloudfunctions.googleapis.com
 
 gcloud services enable cloudfunctions.googleapis.com
 
+cd $WORKDIR/unused-ip
+
+export USED_IP=used-ip-address
+export UNUSED_IP=unused-ip-address
+
+gcloud compute addresses create $USED_IP --project=$PROJECT_ID --region=$REGION
+gcloud compute addresses create $UNUSED_IP --project=$PROJECT_ID --region=$REGION
+
+gcloud compute addresses list --filter="region:($REGION)"
+
+export USED_IP_ADDRESS=$(gcloud compute addresses describe $USED_IP --region=us-west1 --format=json | jq -r '.address')
 
 
 
