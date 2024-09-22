@@ -11,13 +11,10 @@ export ZONE=
 
 ```
 
-
-
-
-
 gcloud services disable cloudfunctions.googleapis.com
 
 gcloud services enable cloudfunctions.googleapis.com
+
 
 
 
@@ -39,10 +36,8 @@ export UNUSED_IP=unused-ip-address
 gcloud compute addresses create $USED_IP --project=$PROJECT_ID --region=$REGION
 gcloud compute addresses create $UNUSED_IP --project=$PROJECT_ID --region=$REGION
 
-
 gcloud compute addresses list --filter="region:($REGION)"
-
-export USED_IP_ADDRESS=$(gcloud compute addresses describe $USED_IP --region=us-west1 --format=json | jq -r '.address')
+export USED_IP_ADDRESS=$(gcloud compute addresses describe $USED_IP --region=$REGION --format=json | jq -r '.address')
 
 gcloud compute instances create static-ip-instance \
 --zone=$ZONE \
@@ -57,16 +52,7 @@ gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID \
 
 
 
-gcloud services disable cloudfunctions.googleapis.com
-
-gcloud services enable cloudfunctions.googleapis.com
-
-gcloud projects add-iam-policy-binding [PROJECT_ID] \
---member="serviceAccount:[PROJECT_ID]@appspot.gserviceaccount.com" \
---role="roles/artifactregistry.reader"
-
-gcloud functions deploy unused_ip_function --gen2 --trigger-http --runtime=nodejs20 --region=us-central1
-
+PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format='value(projectNumber)')
 
 # Your existing deployment command
 deploy_function() {
@@ -124,9 +110,6 @@ REGION="${ZONE%-*}"
 USED_IP=used-ip-address
 UNUSED_IP=unused-ip-address
 gcloud compute addresses create $UNUSED_IP --project=$PROJECT_ID --region=$REGION
-
-
-
 
 
 
