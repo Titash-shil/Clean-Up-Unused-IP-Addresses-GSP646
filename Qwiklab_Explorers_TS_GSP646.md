@@ -11,6 +11,10 @@ export ZONE=
 
 ```
 
+
+
+
+
 gcloud services disable cloudfunctions.googleapis.com
 
 gcloud services enable cloudfunctions.googleapis.com
@@ -29,7 +33,6 @@ git clone https://github.com/GoogleCloudPlatform/gcf-automated-resource-cleanup.
 
 WORKDIR=$(pwd)
 cd $WORKDIR/unused-ip
-
 
 gcloud compute addresses create $USED_IP --project=$PROJECT_ID --region=$REGION
 gcloud compute addresses create $UNUSED_IP --project=$PROJECT_ID --region=$REGION
@@ -108,6 +111,9 @@ REGION="${ZONE%-*}"
 USED_IP=used-ip-address
 UNUSED_IP=unused-ip-address
 gcloud compute addresses create $UNUSED_IP --project=$PROJECT_ID --region=$REGION
+
+
+
 
 
 
